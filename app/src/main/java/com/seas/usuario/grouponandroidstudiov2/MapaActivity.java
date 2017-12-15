@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -20,10 +21,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.seas.usuario.grouponandroidstudiov2.datos.GrouponData;
 import com.seas.usuario.grouponandroidstudiov2.threads.ServiciosTuristicLocation;
 
-public class MapaActivity extends FragmentActivity {
-//public class MapaActivity extends Activity implements OnMapReadyCallback {
+//public class MapaActivity extends FragmentActivity {
+public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "com.seas.TuristicLocation.activityprincipal";
-    private GoogleMap mMap;
+    private GoogleMap mapa;
 
     private static ServiciosTuristicLocation serviciosTuristicLocation;
     private static MapaActivity mapaActivity;
@@ -37,15 +38,15 @@ public class MapaActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
-//        MapFragment mapFragment = (MapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         mapaActivity = this;
         serviciosTuristicLocation = new ServiciosTuristicLocation();
-        cargaGoogleMap();
+//        cargaGoogleMap();
         // Recuperamos los lugares depende de la que se haya pulsado
-        Bundle extras = getIntent().getExtras();
+//        Bundle extras = getIntent().getExtras();
         //if (extras != null) {
         //String parametro = extras.getString(VistaListaIconos.MyKey);
 
@@ -55,59 +56,60 @@ public class MapaActivity extends FragmentActivity {
     }
 
 
-    private void cargaGoogleMap() {
-        if (mMap == null) {
-            mMap = ((SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map)).getMap();
-            if (mMap != null) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                mMap.setMyLocationEnabled(true);
-
-                String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
-                String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
-
-                LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
-                CameraPosition camPos = new CameraPosition.Builder()
-                        .target(localLatLong)   //Centramos el mapa en el local seleccionado
-                        .zoom(18)               //Establecemos el zoom en 18
-                        .build();
-
-                CameraUpdate camUpd3 =
-                        CameraUpdateFactory.newCameraPosition(camPos);
-
-                mMap.animateCamera(camUpd3);
-            }
-        }
-    }
+//    private void cargaGoogleMap() {
+//        if (mMap == null) {
+//            mMap = ((SupportMapFragment) getSupportFragmentManager()
+//                    .findFragmentById(R.id.map)).getMap();
+//            if (mMap != null) {
+//                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//                mMap.setMyLocationEnabled(true);
+//
+//                String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
+//                String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
+//
+//                LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
+//                CameraPosition camPos = new CameraPosition.Builder()
+//                        .target(localLatLong)   //Centramos el mapa en el local seleccionado
+//                        .zoom(18)               //Establecemos el zoom en 18
+//                        .build();
+//
+//                CameraUpdate camUpd3 =
+//                        CameraUpdateFactory.newCameraPosition(camPos);
+//
+//                mMap.animateCamera(camUpd3);
+//            }
+//        }
+//    }
 
     public void anadirMarca(String nombre,String descripcion, String lat, String lng, Bitmap img){
 
         BitmapDescriptor imagen = BitmapDescriptorFactory.fromBitmap(img);
 
-        mMap.addMarker(new MarkerOptions()
+        mapa.addMarker(new MarkerOptions()
                 .position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)))
                 .title(nombre)
                 .snippet(descripcion)
                 .icon(imagen));
     }
 
-//    @Override
-//    public void onMapReady(GoogleMap mMap) {
-//        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//        mMap.setMyLocationEnabled(true);
-//
-//        String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
-//        String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
-//
-//        LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
-//        CameraPosition camPos = new CameraPosition.Builder()
-//                .target(localLatLong)   //Centramos el mapa en el local seleccionado
-//                .zoom(18)               //Establecemos el zoom en 18
-//                .build();
-//
-//        CameraUpdate camUpd3 =
-//                CameraUpdateFactory.newCameraPosition(camPos);
-//
-//        mMap.animateCamera(camUpd3);
-//    }
+    @Override
+    public void onMapReady(GoogleMap mMap) {
+        mapa = mMap;
+        mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mapa.setMyLocationEnabled(true);
+
+        String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
+        String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
+
+        LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
+        CameraPosition camPos = new CameraPosition.Builder()
+                .target(localLatLong)   //Centramos el mapa en el local seleccionado
+                .zoom(18)               //Establecemos el zoom en 18
+                .build();
+
+        CameraUpdate camUpd3 =
+                CameraUpdateFactory.newCameraPosition(camPos);
+
+        mapa.animateCamera(camUpd3);
+    }
 }
