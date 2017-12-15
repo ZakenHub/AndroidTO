@@ -20,8 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.seas.usuario.grouponandroidstudiov2.datos.GrouponData;
 import com.seas.usuario.grouponandroidstudiov2.threads.ServiciosTuristicLocation;
 
-//public class MapaActivity extends FragmentActivity {
-public class MapaActivity extends Activity implements OnMapReadyCallback {
+public class MapaActivity extends FragmentActivity {
+//public class MapaActivity extends Activity implements OnMapReadyCallback {
     private static final String TAG = "com.seas.TuristicLocation.activityprincipal";
     private GoogleMap mMap;
 
@@ -37,13 +37,13 @@ public class MapaActivity extends Activity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        MapFragment mapFragment = (MapFragment) getFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
 
         mapaActivity = this;
         serviciosTuristicLocation = new ServiciosTuristicLocation();
-//        cargaGoogleMap();
+        cargaGoogleMap();
         // Recuperamos los lugares depende de la que se haya pulsado
         Bundle extras = getIntent().getExtras();
         //if (extras != null) {
@@ -55,30 +55,30 @@ public class MapaActivity extends Activity implements OnMapReadyCallback {
     }
 
 
-//    private void cargaGoogleMap() {
-//        if (mMap == null) {
-//            mMap = ((SupportMapFragment) getSupportFragmentManager()
-//                    .findFragmentById(R.id.map)).getMap();
-//            if (mMap != null) {
-//                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//                mMap.setMyLocationEnabled(true);
-//
-//                String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
-//                String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
-//
-//                LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
-//                CameraPosition camPos = new CameraPosition.Builder()
-//                        .target(localLatLong)   //Centramos el mapa en el local seleccionado
-//                        .zoom(18)               //Establecemos el zoom en 18
-//                        .build();
-//
-//                CameraUpdate camUpd3 =
-//                        CameraUpdateFactory.newCameraPosition(camPos);
-//
-//                mMap.animateCamera(camUpd3);
-//            }
-//        }
-//    }
+    private void cargaGoogleMap() {
+        if (mMap == null) {
+            mMap = ((SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map)).getMap();
+            if (mMap != null) {
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                mMap.setMyLocationEnabled(true);
+
+                String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
+                String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
+
+                LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
+                CameraPosition camPos = new CameraPosition.Builder()
+                        .target(localLatLong)   //Centramos el mapa en el local seleccionado
+                        .zoom(18)               //Establecemos el zoom en 18
+                        .build();
+
+                CameraUpdate camUpd3 =
+                        CameraUpdateFactory.newCameraPosition(camPos);
+
+                mMap.animateCamera(camUpd3);
+            }
+        }
+    }
 
     public void anadirMarca(String nombre,String descripcion, String lat, String lng, Bitmap img){
 
@@ -91,23 +91,23 @@ public class MapaActivity extends Activity implements OnMapReadyCallback {
                 .icon(imagen));
     }
 
-    @Override
-    public void onMapReady(GoogleMap mMap) {
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.setMyLocationEnabled(true);
-
-        String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
-        String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
-
-        LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
-        CameraPosition camPos = new CameraPosition.Builder()
-                .target(localLatLong)   //Centramos el mapa en el local seleccionado
-                .zoom(18)               //Establecemos el zoom en 18
-                .build();
-
-        CameraUpdate camUpd3 =
-                CameraUpdateFactory.newCameraPosition(camPos);
-
-        mMap.animateCamera(camUpd3);
-    }
+//    @Override
+//    public void onMapReady(GoogleMap mMap) {
+//        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//        mMap.setMyLocationEnabled(true);
+//
+//        String localLong = GrouponData.getLocalSeleccionado().getLocalLong();
+//        String localLat = GrouponData.getLocalSeleccionado().getLocalLat();
+//
+//        LatLng localLatLong = new LatLng(Double.parseDouble(localLong), Double.parseDouble(localLat));
+//        CameraPosition camPos = new CameraPosition.Builder()
+//                .target(localLatLong)   //Centramos el mapa en el local seleccionado
+//                .zoom(18)               //Establecemos el zoom en 18
+//                .build();
+//
+//        CameraUpdate camUpd3 =
+//                CameraUpdateFactory.newCameraPosition(camPos);
+//
+//        mMap.animateCamera(camUpd3);
+//    }
 }
