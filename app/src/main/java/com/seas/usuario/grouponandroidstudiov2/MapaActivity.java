@@ -1,31 +1,32 @@
 package com.seas.usuario.grouponandroidstudiov2;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.seas.usuario.grouponandroidstudiov2.datos.GrouponData;
 import com.seas.usuario.grouponandroidstudiov2.threads.ServiciosTuristicLocation;
 import com.seas.usuario.grouponandroidstudiov2.tools.PermissionUtils;
@@ -37,10 +38,12 @@ public class MapaActivity extends AppCompatActivity
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private static final String TAG = "com.seas.TuristicLocation.activityprincipal";
+//    private static final String TAG = "com.seas.TuristicLocation.activityprincipal";
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
+
+//    private FusedLocationProviderClient mFusedLocationClient;
 
     private GoogleMap mapa;
 
@@ -60,6 +63,8 @@ public class MapaActivity extends AppCompatActivity
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mapaActivity = this;
         serviciosTuristicLocation = new ServiciosTuristicLocation();
@@ -152,9 +157,37 @@ public class MapaActivity extends AppCompatActivity
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+//        final Location mLocation = null;
+
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            // Permission to access the location is missing.
+//            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+//                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+//        } else if (mapa != null) {
+//            // Access to the location has been granted to the app.
+//            mFusedLocationClient.getLastLocation()
+//                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                        @Override
+//                        public void onSuccess(Location location) {
+//                            // Got last known location. In some rare situations this can be null.
+//                            if (location != null) {
+//                                // Logic to handle location object
+//                                mLocation.setLatitude(location.getLatitude());
+//                                mLocation.setLongitude(location.getLongitude());
+//
+//                            }
+//                        }
+//                    });
+//        }
+//
+//        Toast.makeText(this, "MyLocation: /n + " +
+//                "Latitud: " + mLocation.getLatitude() +
+//                "Longitud: " + mLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
         return false;
     }
 

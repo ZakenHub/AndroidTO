@@ -19,7 +19,7 @@ import com.seas.usuario.grouponandroidstudiov2.tools.Utils;
 
 
 public class ServiciosLista {
-	final Handler handle = new Handler();
+	private final Handler handle = new Handler();
 	private JSONArray datos; 
 //	private OverlayItem getOverlayItem( String nombre, String descripcion, String latitud, String longitud, Drawable drawable){
 //		 	String coordinates[] = {latitud,longitud};
@@ -34,10 +34,10 @@ public class ServiciosLista {
 	public void miThread(final String tipo){
 			Thread t = new Thread(){
 				public void run(){
-					Post post = null;
+					Post post;
 					 try{
 					 	ArrayList<String> parametros = new ArrayList<>();
-						parametros.add("tipo");
+						parametros.add("Todos");
 						parametros.add(tipo);
 						//Llamada a Servidor Web PHP
 						post = new Post();
@@ -53,7 +53,7 @@ public class ServiciosLista {
 			t.start();
 	}
 	 
-		final Runnable proceso = new Runnable(){
+		private final Runnable proceso = new Runnable(){
 			public void run(){
 				try {
 //					ImageView imagenView = new ImageView(MapaActivity.getInstance().getBaseContext());
@@ -94,6 +94,9 @@ public class ServiciosLista {
 								break;
 							case "Tiendas.png":
 								o1.setLocalImage(R.drawable.tiendas);
+								break;
+							case "Farmacias.png":
+								o1.setLocalImage(R.drawable.farmacias);
 								break;
 							default:
 						}
